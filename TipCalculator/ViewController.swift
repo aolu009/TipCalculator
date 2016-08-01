@@ -24,7 +24,6 @@ class MainPage: UIViewController {
         
         let locale = NSLocale.currentLocale()
         let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol) as? String
-        print("",currencySymbol!)
         tipLabel.text = currencySymbol!+"0.00"
         totalLabek.text = currencySymbol!+"0.00"
         billField.becomeFirstResponder()
@@ -42,33 +41,23 @@ class MainPage: UIViewController {
         billField.text = defaults.stringForKey("billField")
         tipLabel.text = defaults.stringForKey("tipLabel")
         taxcalculated.text = defaults.stringForKey("taxcalculated")
-        print(tipPercentages)
                 taxAmount.text = defaults.stringForKey("taxAmount")
         themeGreen = defaults.boolForKey("themeGreen")
         self.view.backgroundColor = themeGreen == true ? UIColor.greenColor() : UIColor.whiteColor()
     }
-    /*
-    override func viewWillDisappear(animated: Bool) {
-        defaults.setDouble(tipPercentages[0], forKey: "tipPercentages0")
-        defaults.setDouble(tipPercentages[1], forKey: "tipPercentages1")
-        defaults.setDouble(tipPercentages[2], forKey: "tipPercentages2")
-    }
-    */
+    
     var tipPercentages = [0.15,0.18,0.2]
     let defaults = NSUserDefaults.standardUserDefaults()
     var themeGreen: Bool = false
     
     @IBAction func onEditingChanged(sender: AnyObject) {
-        //let locale = NSLocale.currentLocale()
-        //let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol) as? String
-        //print("",currencySymbol!)
+        
         let tax: Double = (taxAmount.text! as NSString).doubleValue
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         print(tipControl.selectedSegmentIndex)
         let bill: Double = (billField.text! as NSString).doubleValue
         
         let tip: Double = bill * tipPercentage
-        //billField.text = currencySymbol! + billField.text!
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .CurrencyStyle
         formatter.maximumFractionDigits = 2
@@ -81,7 +70,6 @@ class MainPage: UIViewController {
         else{
             taxcalculated.text = "0.00%"
         }
-        //defaults.setObject(tipPercentages, forKey: "tipPercentages")
         defaults.setObject(totalLabek.text, forKey: "totalLabek")
         defaults.setObject(billField.text, forKey: "billField")
         defaults.setObject(tipLabel.text, forKey: "tipLabel")
@@ -101,7 +89,6 @@ class MainPage: UIViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
