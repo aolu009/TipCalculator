@@ -18,7 +18,7 @@ class SettingsPage: UIViewController {
     
     
     var tipPercentages = [Double]()
-    var tipControl: UISegmentedControl!
+    //var tipControl: UISegmentedControl!
     var themeGreen: Bool = false
     
     override func viewDidLoad() {
@@ -86,8 +86,11 @@ class SettingsPage: UIViewController {
             let navController = segue.destinationViewController as! UINavigationController
             let destinationVC = navController.topViewController as! MainPage
             
-            destinationVC.tipPercentages = tipPercentages
-            destinationVC.tipControl = tipControl
+            //destinationVC.tipPercentages = tipPercentages
+            destinationVC.defaults.setDouble(tipPercentages[0], forKey: "tipPercentages0")
+            destinationVC.defaults.setDouble(tipPercentages[1], forKey: "tipPercentages1")
+            destinationVC.defaults.setDouble(tipPercentages[2], forKey: "tipPercentages2")
+            //destinationVC.tipControl = tipControl
             destinationVC.themeGreen = themeGreen
         }
     }

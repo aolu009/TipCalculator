@@ -27,8 +27,10 @@ class MainPage: UIViewController {
         print("",currencySymbol!)
         tipLabel.text = currencySymbol!+"0.00"
         totalLabek.text = currencySymbol!+"0.00"
-        //taxcalculated.text = currencySymbol!+"0.00"
         billField.becomeFirstResponder()
+        tipPercentages[0] = defaults.doubleForKey("tipPercentages0")
+        tipPercentages[1] = defaults.doubleForKey("tipPercentages1")
+        tipPercentages[2] = defaults.doubleForKey("tipPercentages2")
         tipControl.setTitle(String(tipPercentages[0]*100)+"%", forSegmentAtIndex: 0)
         tipControl.setTitle(String(tipPercentages[1]*100)+"%", forSegmentAtIndex: 1)
         tipControl.setTitle(String(tipPercentages[2]*100)+"%", forSegmentAtIndex: 2)
@@ -44,12 +46,14 @@ class MainPage: UIViewController {
                 taxAmount.text = defaults.stringForKey("taxAmount")
         themeGreen = defaults.boolForKey("themeGreen")
         self.view.backgroundColor = themeGreen == true ? UIColor.greenColor() : UIColor.whiteColor()
-        
-        
     }
-    
-    
-    
+    /*
+    override func viewWillDisappear(animated: Bool) {
+        defaults.setDouble(tipPercentages[0], forKey: "tipPercentages0")
+        defaults.setDouble(tipPercentages[1], forKey: "tipPercentages1")
+        defaults.setDouble(tipPercentages[2], forKey: "tipPercentages2")
+    }
+    */
     var tipPercentages = [0.15,0.18,0.2]
     let defaults = NSUserDefaults.standardUserDefaults()
     var themeGreen: Bool = false
@@ -77,7 +81,7 @@ class MainPage: UIViewController {
         else{
             taxcalculated.text = "0.00%"
         }
-        defaults.setObject(tipPercentages, forKey: "tipPercentages")
+        //defaults.setObject(tipPercentages, forKey: "tipPercentages")
         defaults.setObject(totalLabek.text, forKey: "totalLabek")
         defaults.setObject(billField.text, forKey: "billField")
         defaults.setObject(tipLabel.text, forKey: "tipLabel")

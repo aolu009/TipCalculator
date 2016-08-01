@@ -103,8 +103,11 @@
                                     <action selector="onEditingChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="3AY-8g-U3b"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="taxPercent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUg-NM-F7S">
-                                <rect key="frame" x="126" y="208" width="82.5" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="taxPercent" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tUg-NM-F7S">
+                                <rect key="frame" x="106" y="208" width="82.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82.5" id="Ec8-O9-Zxs"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -115,7 +118,7 @@
                         <constraints>
                             <constraint firstItem="LtD-50-sL8" firstAttribute="leading" secondItem="tUg-NM-F7S" secondAttribute="trailing" constant="207" id="65m-JX-eJw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2eT-lV-h5q" secondAttribute="trailing" constant="22" id="9Tq-wC-PRY"/>
-                            <constraint firstItem="tUg-NM-F7S" firstAttribute="leading" secondItem="2UM-nz-VdB" secondAttribute="trailing" constant="52.5" id="APO-73-eVW"/>
+                            <constraint firstItem="tUg-NM-F7S" firstAttribute="leading" secondItem="2UM-nz-VdB" secondAttribute="trailing" constant="32" id="APO-73-eVW"/>
                             <constraint firstItem="FOW-la-ec6" firstAttribute="top" secondItem="W4E-f1-UH3" secondAttribute="bottom" constant="24" id="B6W-JU-K54"/>
                             <constraint firstItem="gdx-Og-IdY" firstAttribute="top" secondItem="W4E-f1-UH3" secondAttribute="bottom" constant="24" id="FGe-Yg-q1t"/>
                             <constraint firstItem="2eT-lV-h5q" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="35" id="Gm6-fs-4Aq"/>
