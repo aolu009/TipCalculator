@@ -54,7 +54,6 @@ class MainPage: UIViewController {
         
         let tax: Double = (taxAmount.text! as NSString).doubleValue
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
-        print(tipControl.selectedSegmentIndex)
         let bill: Double = (billField.text! as NSString).doubleValue
         
         let tip: Double = bill * tipPercentage
@@ -63,7 +62,6 @@ class MainPage: UIViewController {
         formatter.maximumFractionDigits = 2
         totalLabek.text = formatter.stringFromNumber(tip + bill+tax)
         tipLabel.text = formatter.stringFromNumber(tip)
-        print(bill)
         if bill != 0.0 {
             taxcalculated.text = String(format: "%.2f",100*tax/bill) + "%"
         }
