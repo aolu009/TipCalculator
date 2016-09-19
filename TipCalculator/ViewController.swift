@@ -18,71 +18,74 @@ class MainPage: UIViewController {
     @IBOutlet weak var taxAmount: UITextField!
     @IBOutlet weak var taxcalculated: UILabel!
     
+    @IBOutlet weak var settingButton: UIButton!
     
        override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let locale = NSLocale.currentLocale()
-        let currencySymbol = locale.objectForKey(NSLocaleCurrencySymbol) as? String
+        settingButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        let locale = Locale.current
+        let currencySymbol = (locale as NSLocale).object(forKey: NSLocale.Key.currencySymbol) as? String
         tipLabel.text = currencySymbol!+"0.00"
         totalLabek.text = currencySymbol!+"0.00"
         billField.becomeFirstResponder()
-        tipPercentages[0] = defaults.doubleForKey("tipPercentages0")
-        tipPercentages[1] = defaults.doubleForKey("tipPercentages1")
-        tipPercentages[2] = defaults.doubleForKey("tipPercentages2")
-        tipControl.setTitle(String(tipPercentages[0]*100)+"%", forSegmentAtIndex: 0)
-        tipControl.setTitle(String(tipPercentages[1]*100)+"%", forSegmentAtIndex: 1)
-        tipControl.setTitle(String(tipPercentages[2]*100)+"%", forSegmentAtIndex: 2)
-        billField.layer.borderColor = UIColor.blueColor().CGColor
+        
+        tipPercentages[0] = defaults.double(forKey: "tipPercentages0")
+        tipPercentages[1] = defaults.double(forKey: "tipPercentages1")
+        tipPercentages[2] = defaults.double(forKey: "tipPercentages2")
+        tipControl.setTitle(String(tipPercentages[0]*100)+"%", forSegmentAt: 0)
+        tipControl.setTitle(String(tipPercentages[1]*100)+"%", forSegmentAt: 1)
+        tipControl.setTitle(String(tipPercentages[2]*100)+"%", forSegmentAt: 2)
+        
+        billField.layer.borderColor = UIColor.blue.cgColor
         taxAmount.layer.borderWidth = CGFloat(1.0)
-        taxAmount.layer.borderColor = UIColor.blueColor().CGColor
+        taxAmount.layer.borderColor = UIColor.blue.cgColor
         billField.layer.borderWidth = CGFloat(1.0)
-        totalLabek.text = defaults.stringForKey("totalLabek")
-        billField.text = defaults.stringForKey("billField")
-        tipLabel.text = defaults.stringForKey("tipLabel")
-        taxcalculated.text = defaults.stringForKey("taxcalculated")
-                taxAmount.text = defaults.stringForKey("taxAmount")
-        themeGreen = defaults.boolForKey("themeGreen")
-        self.view.backgroundColor = themeGreen == true ? UIColor.greenColor() : UIColor.whiteColor()
+        totalLabek.text = defaults.string(forKey: "totalLabek")
+        billField.text = defaults.string(forKey: "billField")
+        tipLabel.text = defaults.string(forKey: "tipLabel")
+        taxcalculated.text = defaults.string(forKey: "taxcalculated")
+                taxAmount.text = defaults.string(forKey: "taxAmount")
+        themeGreen = defaults.bool(forKey: "themeGreen")
+        self.view.backgroundColor = themeGreen == true ? UIColor.green : UIColor.white
     }
     
     var tipPercentages = [0.15,0.18,0.2]
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     var themeGreen: Bool = false
     
-    @IBAction func onEditingChanged(sender: AnyObject) {
+    @IBAction func onEditingChanged(_ sender: AnyObject) {
         
         let tax: Double = (taxAmount.text! as NSString).doubleValue
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         let bill: Double = (billField.text! as NSString).doubleValue
         
         let tip: Double = bill * tipPercentage
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .CurrencyStyle
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
         formatter.maximumFractionDigits = 2
-        totalLabek.text = formatter.stringFromNumber(tip + bill+tax)
-        tipLabel.text = formatter.stringFromNumber(tip)
+        totalLabek.text = String(tip + bill+tax)
+        tipLabel.text = String(tip)
         if bill != 0.0 {
             taxcalculated.text = String(format: "%.2f",100*tax/bill) + "%"
         }
         else{
             taxcalculated.text = "0.00%"
         }
-        defaults.setObject(totalLabek.text, forKey: "totalLabek")
-        defaults.setObject(billField.text, forKey: "billField")
-        defaults.setObject(tipLabel.text, forKey: "tipLabel")
-        defaults.setObject(taxcalculated.text, forKey: "taxcalculated")
-        defaults.setObject(taxAmount.text, forKey: "taxAmount")
-        defaults.setBool(themeGreen, forKey: "themeGreen")
+        defaults.set(totalLabek.text, forKey: "totalLabek")
+        defaults.set(billField.text, forKey: "billField")
+        defaults.set(tipLabel.text, forKey: "tipLabel")
+        defaults.set(taxcalculated.text, forKey: "taxcalculated")
+        defaults.set(taxAmount.text, forKey: "taxAmount")
+        defaults.set(themeGreen, forKey: "themeGreen")
         defaults.synchronize()
         
     }
     
-    @IBAction func settingPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("Settings" , sender: tipPercentages)
+    @IBAction func settingPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "Settings" , sender: tipPercentages)
     }
     
-    @IBAction func onTap(sender: AnyObject) {
+    @IBAction func onTap(_ sender: AnyObject) {
         view.endEditing(true)
     }
     override func didReceiveMemoryWarning() {
@@ -90,10 +93,10 @@ class MainPage: UIViewController {
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "Settings") {
             //get a reference to the destination view controller
-            let destinationVC = segue.destinationViewController as! SettingsPage
+            let destinationVC = segue.destination as! SettingsPage
             destinationVC.tipPercentages = tipPercentages
             
         }

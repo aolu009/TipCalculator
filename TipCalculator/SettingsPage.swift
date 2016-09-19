@@ -26,18 +26,18 @@ class SettingsPage: UIViewController {
         tipTier1.text = String(tipPercentages[0]*100)
         tipTier2.text = String(tipPercentages[1]*100)
         tipTier3.text = String(tipPercentages[2]*100)
-        tipTier1.layer.borderColor = UIColor.blueColor().CGColor
+        tipTier1.layer.borderColor = UIColor.blue.cgColor
         tipTier1.layer.borderWidth = CGFloat(1.0)
-        tipTier2.layer.borderColor = UIColor.blueColor().CGColor
+        tipTier2.layer.borderColor = UIColor.blue.cgColor
         tipTier2.layer.borderWidth = CGFloat(1.0)
-        tipTier3.layer.borderColor = UIColor.blueColor().CGColor
+        tipTier3.layer.borderColor = UIColor.blue.cgColor
         tipTier3.layer.borderWidth = CGFloat(1.0)
-        themeSwitch.on = defaults.boolForKey("themeSwitch")
-        themeGreen = defaults.boolForKey("themeGreen")
+        themeSwitch.isOn = defaults.bool(forKey: "themeSwitch")
+        themeGreen = defaults.bool(forKey: "themeGreen")
     }
     
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = UserDefaults.standard
     
     
     override func didReceiveMemoryWarning() {
@@ -46,53 +46,54 @@ class SettingsPage: UIViewController {
     }
     
    
-    @IBAction func changeTier1(sender: AnyObject) {
+    @IBAction func changeTier1(_ sender: AnyObject) {
         let newTip: Double = (tipTier1.text! as NSString).doubleValue/100
         tipPercentages[0] = newTip
     }
     
-    @IBAction func changeTier2(sender: AnyObject) {
+    @IBAction func changeTier2(_ sender: AnyObject) {
         let newTip: Double = (tipTier2.text! as NSString).doubleValue
         tipPercentages[1] = newTip/100
     }
     
-    @IBAction func changeTier3(sender: AnyObject) {
+    @IBAction func changeTier3(_ sender: AnyObject) {
         let newTip: Double = (tipTier3.text! as NSString).doubleValue
         tipPercentages[2] = newTip/100
     
     }
     
-    @IBAction func greenTheme(sender: UISwitch) {
-        if themeSwitch.on == true{
+    @IBAction func greenTheme(_ sender: UISwitch) {
+        if themeSwitch.isOn == true{
             themeGreen = true
-            defaults.setBool(themeSwitch.on, forKey: "themeSwitch")
-            defaults.setBool(themeGreen, forKey: "themeGreen")
+            defaults.set(themeSwitch.isOn, forKey: "themeSwitch")
+            defaults.set(themeGreen, forKey: "themeGreen")
             defaults.synchronize()
         }
-        if themeSwitch.on == false{
+        if themeSwitch.isOn == false{
             themeGreen = false
-            defaults.setBool(themeSwitch.on, forKey: "themeSwitch")
-            defaults.setBool(themeGreen, forKey: "themeGreen")
+            defaults.set(themeSwitch.isOn, forKey: "themeSwitch")
+            defaults.set(themeGreen, forKey: "themeGreen")
             defaults.synchronize()
         }
     }
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "Back") {
             
-            let navController = segue.destinationViewController as! UINavigationController
+            let navController = segue.destination as! UINavigationController
             let destinationVC = navController.topViewController as! MainPage
+            //let destinationVC = segue.destination as! MainPage
             
-            
-            destinationVC.defaults.setDouble(tipPercentages[0], forKey: "tipPercentages0")
-            destinationVC.defaults.setDouble(tipPercentages[1], forKey: "tipPercentages1")
-            destinationVC.defaults.setDouble(tipPercentages[2], forKey: "tipPercentages2")
+            destinationVC.defaults.set(tipPercentages[0], forKey: "tipPercentages0")
+            destinationVC.defaults.set(tipPercentages[1], forKey: "tipPercentages1")
+            destinationVC.defaults.set(tipPercentages[2], forKey: "tipPercentages2")
             destinationVC.themeGreen = themeGreen
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        self.performSegueWithIdentifier("Back" , sender: tipPercentages)
-    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.performSegue(withIdentifier: "Back" , sender: self)
+        
+            }
 }
