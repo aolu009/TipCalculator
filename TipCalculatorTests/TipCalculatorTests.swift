@@ -7,7 +7,7 @@
 //
 
 import XCTest
-//@testable import TipCalculator
+@testable import TipCalculator
 
 class TipCalculatorTests: XCTestCase {
     

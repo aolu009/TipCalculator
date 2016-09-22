@@ -20,9 +20,12 @@ class MainPage: UIViewController {
     
     @IBOutlet weak var settingButton: UIButton!
     
+    
+    
        override func viewDidLoad() {
         super.viewDidLoad()
         settingButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        
         let locale = Locale.current
         let currencySymbol = (locale as NSLocale).object(forKey: NSLocale.Key.currencySymbol) as? String
         tipLabel.text = currencySymbol!+"0.00"
@@ -55,18 +58,28 @@ class MainPage: UIViewController {
     
     @IBAction func onEditingChanged(_ sender: AnyObject) {
         
-        let tax: Double = (taxAmount.text! as NSString).doubleValue
-        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
-        let bill: Double = (billField.text! as NSString).doubleValue
         
-        let tip: Double = bill * tipPercentage
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.maximumFractionDigits = 2
-        totalLabek.text = String(tip + bill+tax)
-        tipLabel.text = String(tip)
+        formatter.maximumIntegerDigits = 6
+        let billText = billField.text!.replacingOccurrences(of: formatter.currencySymbol, with: "").replacingOccurrences(of: formatter.groupingSeparator, with: "").replacingOccurrences(of: formatter.decimalSeparator, with: "")
+        let taxText = taxAmount.text!.replacingOccurrences(of: formatter.currencySymbol, with: "").replacingOccurrences(of: formatter.groupingSeparator, with: "").replacingOccurrences(of: formatter.decimalSeparator, with: "")
+        
+        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let bill: Double = (billText as NSString).doubleValue/100
+        let taxes: Double = (taxText as NSString).doubleValue/100
+        
+        let tip: Double = bill * tipPercentage
+        
+        
+        taxAmount.text = formatter.string(from: taxes as NSNumber)
+        billField.text = formatter.string(from: bill as NSNumber)
+        totalLabek.text = formatter.string(from:(tip + bill + taxes) as NSNumber)
+        
+        tipLabel.text = formatter.string(from: tip as NSNumber)
         if bill != 0.0 {
-            taxcalculated.text = String(format: "%.2f",100*tax/bill) + "%"
+            taxcalculated.text = String(format: "%.2f",100*taxes/bill) + "%"
         }
         else{
             taxcalculated.text = "0.00%"
