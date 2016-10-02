@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainPage: UIViewController {
+class MainPage: UIViewController, UIImagePickerControllerDelegate {
 
     
     @IBOutlet weak var tipLabel: UILabel!
@@ -19,19 +19,18 @@ class MainPage: UIViewController {
     @IBOutlet weak var taxcalculated: UILabel!
     
     @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var numberOfPeople: UITextField!
+    @IBOutlet weak var perPerson: UILabel!
     
     
-    
-       override func viewDidLoad() {
+      override func viewDidLoad() {
         super.viewDidLoad()
+        billField.becomeFirstResponder()
         settingButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        
         let locale = Locale.current
         let currencySymbol = (locale as NSLocale).object(forKey: NSLocale.Key.currencySymbol) as? String
         tipLabel.text = currencySymbol!+"0.00"
         totalLabek.text = currencySymbol!+"0.00"
-        billField.becomeFirstResponder()
-        
         tipPercentages[0] = defaults.double(forKey: "tipPercentages0")
         tipPercentages[1] = defaults.double(forKey: "tipPercentages1")
         tipPercentages[2] = defaults.double(forKey: "tipPercentages2")
@@ -43,18 +42,29 @@ class MainPage: UIViewController {
         taxAmount.layer.borderWidth = CGFloat(1.0)
         taxAmount.layer.borderColor = UIColor.blue.cgColor
         billField.layer.borderWidth = CGFloat(1.0)
+        numberOfPeople.layer.borderColor = UIColor.blue.cgColor
+        numberOfPeople.layer.borderWidth = CGFloat(1.0)
         totalLabek.text = defaults.string(forKey: "totalLabek")
         billField.text = defaults.string(forKey: "billField")
         tipLabel.text = defaults.string(forKey: "tipLabel")
         taxcalculated.text = defaults.string(forKey: "taxcalculated")
                 taxAmount.text = defaults.string(forKey: "taxAmount")
         themeGreen = defaults.bool(forKey: "themeGreen")
-        self.view.backgroundColor = themeGreen == true ? UIColor.green : UIColor.white
+       
+            if let image = bkGrndImage {
+                self.view.backgroundColor! = UIColor(patternImage: image)
+                print("color is",bkGrndImage?.accessibilityIdentifier)
+            }
+            else {
+                self.view.backgroundColor = themeGreen == true ? UIColor.gray : UIColor.white
+            }
+        
     }
     
     var tipPercentages = [0.15,0.18,0.2]
     let defaults = UserDefaults.standard
     var themeGreen: Bool = false
+    var bkGrndImage: UIImage?
     
     @IBAction func onEditingChanged(_ sender: AnyObject) {
         
@@ -65,14 +75,21 @@ class MainPage: UIViewController {
         formatter.maximumIntegerDigits = 6
         let billText = billField.text!.replacingOccurrences(of: formatter.currencySymbol, with: "").replacingOccurrences(of: formatter.groupingSeparator, with: "").replacingOccurrences(of: formatter.decimalSeparator, with: "")
         let taxText = taxAmount.text!.replacingOccurrences(of: formatter.currencySymbol, with: "").replacingOccurrences(of: formatter.groupingSeparator, with: "").replacingOccurrences(of: formatter.decimalSeparator, with: "")
+        let numPpl = numberOfPeople.text!.replacingOccurrences(of: formatter.groupingSeparator, with: "")
+        
         
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         let bill: Double = (billText as NSString).doubleValue/100
         let taxes: Double = (taxText as NSString).doubleValue/100
         
+        let numOfPpl = numberOfPeople.text! as NSString
+        let numPeople : Double = (numPpl as NSString).doubleValue
         let tip: Double = bill * tipPercentage
         
-        
+        if numOfPpl.length > 2{
+            numberOfPeople.deleteBackward()
+        }
+        perPerson.text = formatter.string(from:((tip + bill + taxes) / numPeople) as NSNumber)! + "/person"
         taxAmount.text = formatter.string(from: taxes as NSNumber)
         billField.text = formatter.string(from: bill as NSNumber)
         totalLabek.text = formatter.string(from:(tip + bill + taxes) as NSNumber)
@@ -108,7 +125,6 @@ class MainPage: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if (segue.identifier == "Settings") {
-            //get a reference to the destination view controller
             let destinationVC = segue.destination as! SettingsPage
             destinationVC.tipPercentages = tipPercentages
             

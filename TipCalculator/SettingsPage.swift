@@ -5,10 +5,13 @@
 //  Created by Lu Ao on 7/26/16.
 //  Copyright © 2016 Lu Ao. All rights reserved.
 //
+import FBSDKLoginKit
+import FBSDKShareKit
 
 import UIKit
 
-class SettingsPage: UIViewController {
+
+class SettingsPage: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
     @IBOutlet weak var tipTier1: UITextField!
@@ -17,10 +20,18 @@ class SettingsPage: UIViewController {
     @IBOutlet weak var themeSwitch: UISwitch!
     
     
+    
     var tipPercentages = [Double]()
     var themeGreen: Bool = false
+    var pickedImage: UIImage?
     
     override func viewDidLoad() {
+        
+        let loginButton: FBSDKLoginButton = FBSDKLoginButton.init()
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
+        
+        
         super.viewDidLoad()
         print(tipPercentages)
         tipTier1.text = String(tipPercentages[0]*100)
@@ -76,6 +87,11 @@ class SettingsPage: UIViewController {
             defaults.synchronize()
         }
     }
+    @IBAction func useImageView(_ sender: AnyObject) {
+        let pickController = UIImagePickerController()
+        pickController.delegate = self
+        self.present(pickController, animated: true, completion:nil)
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
@@ -83,17 +99,33 @@ class SettingsPage: UIViewController {
             
             let navController = segue.destination as! UINavigationController
             let destinationVC = navController.topViewController as! MainPage
-            //let destinationVC = segue.destination as! MainPage
             
             destinationVC.defaults.set(tipPercentages[0], forKey: "tipPercentages0")
             destinationVC.defaults.set(tipPercentages[1], forKey: "tipPercentages1")
             destinationVC.defaults.set(tipPercentages[2], forKey: "tipPercentages2")
             destinationVC.themeGreen = themeGreen
+            destinationVC.bkGrndImage = pickedImage
+            //destinationVC.defaults.set(pickedImage, forKey: "pickedImage")
         }
+    }
+    
+    func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo: [String : Any]){
+        if let image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage {
+            pickedImage = image
+            self.dismiss(animated: true, completion: nil)
+            themeGreen = false
+            themeSwitch.isOn = false
+        }
+        
+    }
+    
+    func imagePickerControllerDidCancel(_: UIImagePickerController){
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.performSegue(withIdentifier: "Back" , sender: self)
+        super.viewWillDisappear(false)
         
             }
 }

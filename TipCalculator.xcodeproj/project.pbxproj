@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF41ED0B1D9F7BDE00C974C8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF41ED081D9F7BDE00C974C8 /* FBSDKCoreKit.framework */; };
+		BF41ED0C1D9F7BDE00C974C8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF41ED091D9F7BDE00C974C8 /* FBSDKLoginKit.framework */; };
+		BF41ED0D1D9F7BDE00C974C8 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF41ED0A1D9F7BDE00C974C8 /* FBSDKShareKit.framework */; };
+		BF41ED0F1D9F857500C974C8 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF41ED0E1D9F857500C974C8 /* Bolts.framework */; };
 		BFDA7ED91D45A6EF008744D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDA7ED81D45A6EF008744D3 /* AppDelegate.swift */; };
 		BFDA7EDB1D45A6EF008744D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDA7EDA1D45A6EF008744D3 /* ViewController.swift */; };
 		BFDA7EDE1D45A6EF008744D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFDA7EDC1D45A6EF008744D3 /* Main.storyboard */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF41ED081D9F7BDE00C974C8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		BF41ED091D9F7BDE00C974C8 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		BF41ED0A1D9F7BDE00C974C8 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		BF41ED0E1D9F857500C974C8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		BFDA7ED51D45A6EF008744D3 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFDA7ED81D45A6EF008744D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BFDA7EDA1D45A6EF008744D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +64,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF41ED0C1D9F7BDE00C974C8 /* FBSDKLoginKit.framework in Frameworks */,
+				BF41ED0B1D9F7BDE00C974C8 /* FBSDKCoreKit.framework in Frameworks */,
+				BF41ED0D1D9F7BDE00C974C8 /* FBSDKShareKit.framework in Frameworks */,
+				BF41ED0F1D9F857500C974C8 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +112,10 @@
 			isa = PBXGroup;
 			children = (
 				BFDA7ED81D45A6EF008744D3 /* AppDelegate.swift */,
+				BF41ED0E1D9F857500C974C8 /* Bolts.framework */,
+				BF41ED081D9F7BDE00C974C8 /* FBSDKCoreKit.framework */,
+				BF41ED091D9F7BDE00C974C8 /* FBSDKLoginKit.framework */,
+				BF41ED0A1D9F7BDE00C974C8 /* FBSDKShareKit.framework */,
 				BFDA7EDA1D45A6EF008744D3 /* ViewController.swift */,
 				BFDA7EDC1D45A6EF008744D3 /* Main.storyboard */,
 				BFDA7F061D474CC2008744D3 /* SettingsPage.swift */,
@@ -416,6 +432,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TipCalculator",
+				);
 				INFOPLIST_FILE = TipCalculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lu-Ao.TipCalculator";
@@ -431,6 +451,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TipCalculator",
+				);
 				INFOPLIST_FILE = TipCalculator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lu-Ao.TipCalculator";
