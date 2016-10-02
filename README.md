@@ -14,6 +14,9 @@ Completed:
 * [x] Optional: Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 * [x] Optional: Making a switch at the setting page to change the back ground color
 * [x] Optional: Add tax field to take tax amount into calculation
+* [x] Optional: Add tax field to calculate the amount of money people sharing
+* [x] Optional: Add a facebook buttom as a start to work on the function that people can sent the exact amount to other people
+
 
 ![Video Walkthrough](TipCalculatorDemo.gif)
 
